@@ -2,23 +2,24 @@
 Tests for position sizing calculations.
 """
 
-import pytest
 import sys
 from pathlib import Path
+
+import pytest
 
 # Add src to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from aperion.calculators.position_sizing import (
-    calculate_stop_distance_pips,
-    calculate_risk_amount,
-    calculate_risk_per_lot,
     calculate_position_size,
     calculate_reward_risk_ratio,
+    calculate_risk_amount,
+    calculate_risk_per_lot,
+    calculate_stop_distance_pips,
     size_position,
     validate_instrument,
 )
-from aperion.instruments.forex import EURUSD, USDJPY, GBPUSD
+from aperion.instruments.forex import EURUSD, USDJPY
 
 
 class TestCalculateStopDistancePips:
@@ -32,7 +33,7 @@ class TestCalculateStopDistancePips:
     def test_eurusd_long_position(self):
         """Test stop distance for EUR/USD long."""
         result = calculate_stop_distance_pips(1.08500, 1.08000, 0.0001)
-        assert result == 50.0
+        assert result == pytest.approx(50.0)
 
     def test_usdjpy_long_position(self):
         """Test stop distance for USD/JPY long."""
@@ -111,7 +112,8 @@ class TestCalculatePositionSize:
     def test_respects_lot_increment(self):
         """Position size should be multiple of lot_increment."""
         result = calculate_position_size(200.0, 918.0, 0.01)
-        assert result % 0.01 == pytest.approx(0.0, abs=1e-10)
+        # Check that result is a multiple of 0.01 (within floating point tolerance)
+        assert round(result / 0.01) * 0.01 == pytest.approx(result)
 
     def test_zero_risk_returns_zero(self):
         """Zero risk amount should return zero position size."""
@@ -125,12 +127,12 @@ class TestCalculateRewardRiskRatio:
     def test_two_to_one_long(self):
         """Test 2:1 R:R for long position."""
         result = calculate_reward_risk_ratio(1.08500, 1.08000, 1.09500)
-        assert result == 2.0
+        assert result == pytest.approx(2.0)
 
     def test_two_to_one_short(self):
         """Test 2:1 R:R for short position."""
         result = calculate_reward_risk_ratio(1.09500, 1.10000, 1.08500)
-        assert result == 2.0
+        assert result == pytest.approx(2.0)
 
     def test_eurusd_short_example(self):
         """Test the EUR/USD short example from requirements."""
@@ -173,7 +175,7 @@ class TestSizePosition:
             entry_price=1.17300,
             stop_loss=1.18218,
             take_profit=1.15000,
-            instrument_name="EUR/USD"
+            instrument_name="EUR/USD",
         )
 
         assert result["direction"] == "SHORT"
@@ -190,7 +192,7 @@ class TestSizePosition:
             entry_price=1.08500,
             stop_loss=1.08000,
             take_profit=1.09500,
-            instrument_name="EUR/USD"
+            instrument_name="EUR/USD",
         )
 
         assert result["direction"] == "LONG"
@@ -207,7 +209,7 @@ class TestSizePosition:
             entry_price=150.500,
             stop_loss=149.500,
             take_profit=152.500,
-            instrument_name="USD/JPY"
+            instrument_name="USD/JPY",
         )
 
         assert result["direction"] == "LONG"
@@ -223,7 +225,7 @@ class TestSizePosition:
             risk_percent=1.0,
             entry_price=1.08500,
             stop_loss=1.08000,
-            instrument_name="EUR/USD"
+            instrument_name="EUR/USD",
         )
 
         assert "reward_risk_ratio" not in result
@@ -237,7 +239,7 @@ class TestSizePosition:
             risk_percent=2.0,
             entry_price=1.17300,
             stop_loss=1.18218,
-            instrument_name="EUR/USD"
+            instrument_name="EUR/USD",
         )
 
         intended_risk = 10000 * 0.02  # $200
