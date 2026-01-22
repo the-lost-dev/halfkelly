@@ -11,8 +11,6 @@ Where:
     - Risk Per Lot = Stop Distance (pips) × Pip Value
 """
 
-from typing import Optional
-
 
 def calculate_stop_distance_pips(entry_price: float, stop_loss: float, pip_size: float) -> float:
     """
@@ -146,8 +144,8 @@ def size_position(
     risk_percent: float,
     entry_price: float,
     stop_loss: float,
-    take_profit: Optional[float] = None,
-    instrument_name: str = "UNKNOWN"
+    take_profit: float | None = None,
+    instrument_name: str = "UNKNOWN",
 ) -> dict:
     """
     Calculate complete position sizing for a trade.

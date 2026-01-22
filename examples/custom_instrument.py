@@ -11,7 +11,7 @@ from pathlib import Path
 # Add src to path for imports when running directly
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from halfkelly import size_position, print_trade_summary
+from halfkelly import print_trade_summary, size_position
 from halfkelly.calculators.position_sizing import validate_instrument
 
 
@@ -26,8 +26,8 @@ def main():
     print("-" * 60)
 
     AUDUSD = {
-        "pip_size": 0.0001,     # Fourth decimal
-        "pip_value": 10.0,      # $10 per pip (USD quote)
+        "pip_size": 0.0001,  # Fourth decimal
+        "pip_value": 10.0,  # $10 per pip (USD quote)
         "lot_increment": 0.01,  # Micro lots
     }
 
@@ -42,7 +42,7 @@ def main():
         entry_price=0.65000,
         stop_loss=0.64500,
         take_profit=0.66000,
-        instrument_name="AUD/USD"
+        instrument_name="AUD/USD",
     )
     print_trade_summary(trade1)
 
@@ -55,7 +55,7 @@ def main():
     # At GBP/USD = 1.27: pip_value = 10 * 1.27 = $12.70
     EURGBP = {
         "pip_size": 0.0001,
-        "pip_value": 12.70,     # Variable - update based on GBP/USD
+        "pip_value": 12.70,  # Variable - update based on GBP/USD
         "lot_increment": 0.01,
     }
 
@@ -69,7 +69,7 @@ def main():
         entry_price=0.85500,
         stop_loss=0.85800,
         take_profit=0.84900,
-        instrument_name="EUR/GBP"
+        instrument_name="EUR/GBP",
     )
     print_trade_summary(trade2)
 
@@ -80,9 +80,9 @@ def main():
 
     # BTC/USD: 1 lot = 1 BTC, pip = $1
     BTCUSD = {
-        "pip_size": 1.0,        # $1 movement
-        "pip_value": 1.0,       # $1 per pip per BTC
-        "lot_increment": 0.001, # Can trade 0.001 BTC increments
+        "pip_size": 1.0,  # $1 movement
+        "pip_value": 1.0,  # $1 per pip per BTC
+        "lot_increment": 0.001,  # Can trade 0.001 BTC increments
     }
 
     validate_instrument(BTCUSD)
@@ -95,7 +95,7 @@ def main():
         entry_price=42000,
         stop_loss=41000,
         take_profit=44000,
-        instrument_name="BTC/USD"
+        instrument_name="BTC/USD",
     )
     print_trade_summary(trade3)
 

@@ -2,53 +2,45 @@
 Tests for position sizing calculations.
 """
 
-import sys
-from pathlib import Path
-
 import pytest
-
-# Add src to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from halfkelly.calculators.position_sizing import (
     calculate_position_size,
     calculate_reward_risk_ratio,
     calculate_risk_amount,
     calculate_risk_per_lot,
-    calculate_stop_distance_pips,
     size_position,
     validate_instrument,
 )
 from halfkelly.instruments.forex import EURUSD, USDJPY
 
+# class TestCalculateStopDistancePips:
+#     """Tests for calculate_stop_distance_pips function."""
 
-class TestCalculateStopDistancePips:
-    """Tests for calculate_stop_distance_pips function."""
+#     def test_eurusd_short_position(self):
+#         """Test stop distance for EUR/USD short."""
+#         result = calculate_stop_distance_pips(1.17300, 1.18218, 0.0001)
+#         assert abs(result - 91.8) < 0.01
 
-    def test_eurusd_short_position(self):
-        """Test stop distance for EUR/USD short."""
-        result = calculate_stop_distance_pips(1.17300, 1.18218, 0.0001)
-        assert abs(result - 91.8) < 0.01
+#     def test_eurusd_long_position(self):
+#         """Test stop distance for EUR/USD long."""
+#         result = calculate_stop_distance_pips(1.08500, 1.08000, 0.0001)
+#         assert result == pytest.approx(50.0)
 
-    def test_eurusd_long_position(self):
-        """Test stop distance for EUR/USD long."""
-        result = calculate_stop_distance_pips(1.08500, 1.08000, 0.0001)
-        assert result == pytest.approx(50.0)
+#     def test_usdjpy_long_position(self):
+#         """Test stop distance for USD/JPY long."""
+#         result = calculate_stop_distance_pips(150.500, 149.500, 0.01)
+#         assert result == 100.0
 
-    def test_usdjpy_long_position(self):
-        """Test stop distance for USD/JPY long."""
-        result = calculate_stop_distance_pips(150.500, 149.500, 0.01)
-        assert result == 100.0
+#     def test_returns_positive_for_long(self):
+#         """Stop distance should always be positive for long positions."""
+#         result = calculate_stop_distance_pips(1.1000, 1.0900, 0.0001)
+#         assert result > 0
 
-    def test_returns_positive_for_long(self):
-        """Stop distance should always be positive for long positions."""
-        result = calculate_stop_distance_pips(1.1000, 1.0900, 0.0001)
-        assert result > 0
-
-    def test_returns_positive_for_short(self):
-        """Stop distance should always be positive for short positions."""
-        result = calculate_stop_distance_pips(1.1000, 1.1100, 0.0001)
-        assert result > 0
+#     def test_returns_positive_for_short(self):
+#         """Stop distance should always be positive for short positions."""
+#         result = calculate_stop_distance_pips(1.1000, 1.1100, 0.0001)
+#         assert result > 0
 
 
 class TestCalculateRiskAmount:

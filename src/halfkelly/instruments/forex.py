@@ -14,8 +14,6 @@ Note on pip values:
     For precise calculations, pip values should be updated based on current rates.
 """
 
-from typing import Optional
-
 # Major Pairs (USD as quote currency)
 EURUSD: dict[str, float] = {
     "pip_size": 0.0001,
@@ -65,7 +63,7 @@ _INSTRUMENTS: dict[str, dict[str, float]] = {
 }
 
 
-def get_instrument(name: str) -> Optional[dict[str, float]]:
+def get_instrument(name: str) -> dict[str, float] | None:
     """
     Get instrument configuration by name.
 

@@ -12,11 +12,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from halfkelly import (
-    size_position,
-    print_trade_summary,
     EURUSD,
     USDJPY,
     XAUUSD,
+    print_trade_summary,
+    size_position,
 )
 
 
@@ -39,7 +39,7 @@ def main():
         entry_price=1.17300,
         stop_loss=1.18218,
         take_profit=1.15000,
-        instrument_name="EUR/USD"
+        instrument_name="EUR/USD",
     )
     print_trade_summary(trade1)
 
@@ -57,7 +57,7 @@ def main():
         entry_price=1.08500,
         stop_loss=1.08000,
         take_profit=1.09500,
-        instrument_name="EUR/USD"
+        instrument_name="EUR/USD",
     )
     print_trade_summary(trade2)
 
@@ -75,7 +75,7 @@ def main():
         entry_price=150.500,
         stop_loss=149.500,
         take_profit=152.500,
-        instrument_name="USD/JPY"
+        instrument_name="USD/JPY",
     )
     print_trade_summary(trade3)
 
@@ -93,7 +93,7 @@ def main():
         entry_price=2000.00,
         stop_loss=1985.00,
         take_profit=2030.00,
-        instrument_name="XAU/USD"
+        instrument_name="XAU/USD",
     )
     print_trade_summary(trade4)
 
@@ -110,7 +110,7 @@ def main():
         risk_percent=1.0,
         entry_price=1.10000,
         stop_loss=1.09800,
-        instrument_name="EUR/USD"
+        instrument_name="EUR/USD",
     )
     print_trade_summary(trade5)
 

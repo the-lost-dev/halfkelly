@@ -4,9 +4,9 @@ Instruments module containing forex pair configurations.
 
 from halfkelly.instruments.forex import (
     EURUSD,
+    GBPJPY,
     GBPUSD,
     USDJPY,
-    GBPJPY,
     XAUUSD,
     get_instrument,
     list_instruments,

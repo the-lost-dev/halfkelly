@@ -9,18 +9,18 @@ __version__ = "0.1.0"
 __author__ = "HalfKelly"
 
 from halfkelly.calculators.position_sizing import (
-    calculate_stop_distance_pips,
-    calculate_risk_amount,
-    calculate_risk_per_lot,
     calculate_position_size,
     calculate_reward_risk_ratio,
+    calculate_risk_amount,
+    calculate_risk_per_lot,
+    calculate_stop_distance_pips,
     size_position,
 )
 from halfkelly.instruments.forex import (
     EURUSD,
+    GBPJPY,
     GBPUSD,
     USDJPY,
-    GBPJPY,
     XAUUSD,
     get_instrument,
     list_instruments,
