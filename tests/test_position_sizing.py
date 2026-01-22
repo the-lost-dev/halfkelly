@@ -10,7 +10,7 @@ import pytest
 # Add src to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from aperion.calculators.position_sizing import (
+from halfkelly.calculators.position_sizing import (
     calculate_position_size,
     calculate_reward_risk_ratio,
     calculate_risk_amount,
@@ -19,7 +19,7 @@ from aperion.calculators.position_sizing import (
     size_position,
     validate_instrument,
 )
-from aperion.instruments.forex import EURUSD, USDJPY
+from halfkelly.instruments.forex import EURUSD, USDJPY
 
 
 class TestCalculateStopDistancePips:

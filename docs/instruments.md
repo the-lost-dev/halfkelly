@@ -1,6 +1,6 @@
 # Instruments
 
-Aperion includes pre-configured instruments for common forex pairs and commodities.
+HalfKelly includes pre-configured instruments for common forex pairs and commodities.
 
 ## Instrument Configuration
 
@@ -86,7 +86,7 @@ For pairs where USD is the **quote currency** (EUR/USD, GBP/USD):
 
 For pairs where USD is the **base currency** or cross pairs:
 - Pip value varies with exchange rates
-- The values in Aperion are approximations
+- The values in HalfKelly are approximations
 - For precise calculations, update pip values based on current rates
 
 ### Calculating Variable Pip Values
@@ -114,7 +114,7 @@ AUDUSD = {
 }
 
 # Use with size_position
-from aperion import size_position
+from halfkelly import size_position
 
 trade = size_position(
     instrument=AUDUSD,
@@ -128,10 +128,10 @@ trade = size_position(
 
 ## Instrument Validation
 
-Aperion validates that instruments contain required keys:
+HalfKelly validates that instruments contain required keys:
 
 ```python
-from aperion.calculators.position_sizing import validate_instrument
+from halfkelly.calculators.position_sizing import validate_instrument
 
 # This will raise ValueError
 invalid_instrument = {"pip_size": 0.0001}
@@ -143,7 +143,7 @@ validate_instrument(invalid_instrument)
 
 ### By Name
 ```python
-from aperion import get_instrument
+from halfkelly import get_instrument
 
 # All of these work:
 inst = get_instrument("EURUSD")    # Canonical
@@ -154,7 +154,7 @@ inst = get_instrument("GOLD")      # Alias
 
 ### List All
 ```python
-from aperion import list_instruments
+from halfkelly import list_instruments
 
 instruments = list_instruments()
 # ['EURUSD', 'GBPUSD', 'USDJPY', 'GBPJPY', 'XAUUSD']

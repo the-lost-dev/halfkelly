@@ -2,7 +2,7 @@
 Instruments module containing forex pair configurations.
 """
 
-from aperion.instruments.forex import (
+from halfkelly.instruments.forex import (
     EURUSD,
     GBPUSD,
     USDJPY,

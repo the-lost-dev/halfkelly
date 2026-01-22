@@ -11,7 +11,7 @@ from pathlib import Path
 # Add src to path for imports when running directly
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from aperion import (
+from halfkelly import (
     calculate_stop_distance_pips,
     calculate_risk_amount,
     calculate_risk_per_lot,
@@ -23,7 +23,7 @@ from aperion import (
 
 def main():
     print("=" * 60)
-    print("APERION - Step-by-Step Position Sizing")
+    print("HALFKELLY - Step-by-Step Position Sizing")
     print("=" * 60)
 
     # Trade parameters

@@ -1,14 +1,14 @@
 """
-Aperion - Forex Risk Management Engine
+HalfKelly - Forex Risk Management Engine
 
 A comprehensive toolkit for calculating position sizes, managing risk,
 and analyzing forex trades.
 """
 
 __version__ = "0.1.0"
-__author__ = "Aperion"
+__author__ = "HalfKelly"
 
-from aperion.calculators.position_sizing import (
+from halfkelly.calculators.position_sizing import (
     calculate_stop_distance_pips,
     calculate_risk_amount,
     calculate_risk_per_lot,
@@ -16,7 +16,7 @@ from aperion.calculators.position_sizing import (
     calculate_reward_risk_ratio,
     size_position,
 )
-from aperion.instruments.forex import (
+from halfkelly.instruments.forex import (
     EURUSD,
     GBPUSD,
     USDJPY,
@@ -25,7 +25,7 @@ from aperion.instruments.forex import (
     get_instrument,
     list_instruments,
 )
-from aperion.utils.formatting import print_trade_summary
+from halfkelly.utils.formatting import print_trade_summary
 
 __all__ = [
     # Calculators

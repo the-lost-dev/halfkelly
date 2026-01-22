@@ -1,4 +1,4 @@
-# Aperion
+# HalfKelly
 
 A complete trading risk management platform that works with any broker, any instrument, any account type. Every feature is optional and configurable. The system adapts to the trader—not the other way around.
 
@@ -6,7 +6,7 @@ A complete trading risk management platform that works with any broker, any inst
 
 ## Vision
 
-A comprehensive trading risk management system designed with flexibility at its core. Whether you trade FX, Crypto, Futures, Stocks, CFDs, or Options—Aperion handles it all.
+A comprehensive trading risk management system designed with flexibility at its core. Whether you trade FX, Crypto, Futures, Stocks, CFDs, or Options—HalfKelly handles it all.
 
 ## Core Design Principles
 
@@ -55,7 +55,7 @@ pip install -e ".[dev]"
 ## Quick Start
 
 ```python
-from aperion import size_position, EURUSD, print_trade_summary
+from halfkelly import size_position, EURUSD, print_trade_summary
 
 trade = size_position(
     instrument=EURUSD,
@@ -150,9 +150,9 @@ Users create Risk Profiles with their own rules. Profiles can be assigned to acc
 ## Project Structure
 
 ```
-aperion/
+halfkelly/
 ├── src/
-│   └── aperion/
+│   └── halfkelly/
 │       ├── __init__.py
 │       ├── calculators/
 │       │   ├── __init__.py
@@ -188,7 +188,7 @@ pytest
 
 With coverage:
 ```bash
-pytest --cov=aperion --cov-report=term-missing
+pytest --cov=halfkelly --cov-report=term-missing
 ```
 
 ## Documentation

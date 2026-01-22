@@ -1,3 +1,3 @@
 """
-Aperion test suite.
+HalfKelly test suite.
 """

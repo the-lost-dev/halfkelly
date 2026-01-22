@@ -1,6 +1,6 @@
-# Aperion Documentation
+# HalfKelly Documentation
 
-Welcome to the Aperion documentation. Aperion is a Forex Risk Management Engine designed to help traders calculate position sizes and manage risk effectively.
+Welcome to the HalfKelly documentation. HalfKelly is a Forex Risk Management Engine designed to help traders calculate position sizes and manage risk effectively.
 
 ## Table of Contents
 
@@ -19,7 +19,7 @@ Welcome to the Aperion documentation. Aperion is a Forex Risk Management Engine 
 
 ### The Position Sizing Formula
 
-Aperion uses a simple but effective formula for position sizing:
+HalfKelly uses a simple but effective formula for position sizing:
 
 ```
 Position Size = Risk Amount ÷ Risk Per Lot

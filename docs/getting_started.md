@@ -1,6 +1,6 @@
 # Getting Started
 
-This guide will help you get up and running with Aperion quickly.
+This guide will help you get up and running with HalfKelly quickly.
 
 ## Installation
 
@@ -8,13 +8,13 @@ This guide will help you get up and running with Aperion quickly.
 
 ```bash
 git clone <repository-url>
-cd aperion
+cd halfkelly
 pip install -e .
 ```
 
 ### Dependencies
 
-Aperion has no external runtime dependencies. For development:
+HalfKelly has no external runtime dependencies. For development:
 
 ```bash
 pip install -e ".[dev]"
@@ -25,7 +25,7 @@ pip install -e ".[dev]"
 ### Quick Position Sizing
 
 ```python
-from aperion import size_position, EURUSD, print_trade_summary
+from halfkelly import size_position, EURUSD, print_trade_summary
 
 # Calculate position size for a EUR/USD trade
 trade = size_position(
@@ -61,13 +61,13 @@ Output:
 For more control, use the individual calculation functions:
 
 ```python
-from aperion import (
+from halfkelly import (
     calculate_stop_distance_pips,
     calculate_risk_amount,
     calculate_risk_per_lot,
     calculate_position_size,
 )
-from aperion.instruments import EURUSD
+from halfkelly.instruments import EURUSD
 
 # Step-by-step calculation
 entry = 1.08500
@@ -95,7 +95,7 @@ print(f"Position size: {position_size} lots")
 ### Looking Up Instruments
 
 ```python
-from aperion import get_instrument, list_instruments
+from halfkelly import get_instrument, list_instruments
 
 # Get instrument by name (case-insensitive, with or without slash)
 eurusd = get_instrument("EUR/USD")

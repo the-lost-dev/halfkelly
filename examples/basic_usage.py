@@ -11,7 +11,7 @@ from pathlib import Path
 # Add src to path for imports when running directly
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from aperion import (
+from halfkelly import (
     size_position,
     print_trade_summary,
     EURUSD,
@@ -22,7 +22,7 @@ from aperion import (
 
 def main():
     print("=" * 60)
-    print("APERION - Position Sizing Examples")
+    print("HALFKELLY - Position Sizing Examples")
     print("=" * 60)
 
     # Example 1: EUR/USD Short

@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "aperion"
+name = "halfkelly"
 version = "0.1.0"
 description = "Forex Risk Management Engine"
 readme = "README.md"
@@ -32,9 +32,9 @@ dev = [
 ]
 
 [project.urls]
-Documentation = "https://github.com/aperion/aperion#readme"
-Issues = "https://github.com/aperion/aperion/issues"
-Source = "https://github.com/aperion/aperion"
+Documentation = "https://github.com/the-lost-dev/halfkelly#readme"
+Issues = "https://github.com/the-lost-dev/halfkelly/issues"
+Source = "https://github.com/the-lost-dev/halfkelly"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -75,10 +75,10 @@ ignore = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["aperion"]
+known-first-party = ["halfkelly"]
 
 [tool.coverage.run]
-source = ["src/aperion"]
+source = ["src/halfkelly"]
 branch = true
 
 [tool.coverage.report]

@@ -11,13 +11,13 @@ from pathlib import Path
 # Add src to path for imports when running directly
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from aperion import size_position, print_trade_summary
-from aperion.calculators.position_sizing import validate_instrument
+from halfkelly import size_position, print_trade_summary
+from halfkelly.calculators.position_sizing import validate_instrument
 
 
 def main():
     print("=" * 60)
-    print("APERION - Custom Instrument Examples")
+    print("HALFKELLY - Custom Instrument Examples")
     print("=" * 60)
 
     # Example 1: AUD/USD (USD quote currency - standard pip value)

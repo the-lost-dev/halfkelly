@@ -176,7 +176,7 @@ def size_position(
             - potential_reward: Potential profit in dollars (if take_profit provided)
 
     Example:
-        >>> from aperion.instruments.forex import EURUSD
+        >>> from halfkelly.instruments.forex import EURUSD
         >>> result = size_position(
         ...     instrument=EURUSD,
         ...     account_balance=10000,

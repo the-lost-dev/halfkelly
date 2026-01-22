@@ -1,6 +1,6 @@
 # API Reference
 
-Complete API documentation for Aperion.
+Complete API documentation for HalfKelly.
 
 ## Position Sizing Functions
 
@@ -36,7 +36,7 @@ def size_position(
 
 **Example:**
 ```python
-from aperion import size_position, EURUSD
+from halfkelly import size_position, EURUSD
 
 trade = size_position(
     instrument=EURUSD,
@@ -75,7 +75,7 @@ def calculate_stop_distance_pips(
 
 **Example:**
 ```python
-from aperion import calculate_stop_distance_pips
+from halfkelly import calculate_stop_distance_pips
 
 pips = calculate_stop_distance_pips(1.17300, 1.18218, 0.0001)
 print(pips)  # 91.8
@@ -105,7 +105,7 @@ def calculate_risk_amount(
 
 **Example:**
 ```python
-from aperion import calculate_risk_amount
+from halfkelly import calculate_risk_amount
 
 risk = calculate_risk_amount(10000, 2.0)
 print(risk)  # 200.0
@@ -135,7 +135,7 @@ def calculate_risk_per_lot(
 
 **Example:**
 ```python
-from aperion import calculate_risk_per_lot
+from halfkelly import calculate_risk_per_lot
 
 risk_per_lot = calculate_risk_per_lot(91.8, 10.0)
 print(risk_per_lot)  # 918.0
@@ -167,7 +167,7 @@ def calculate_position_size(
 
 **Example:**
 ```python
-from aperion import calculate_position_size
+from halfkelly import calculate_position_size
 
 lots = calculate_position_size(200.0, 918.0, 0.01)
 print(lots)  # 0.21
@@ -199,7 +199,7 @@ def calculate_reward_risk_ratio(
 
 **Example:**
 ```python
-from aperion import calculate_reward_risk_ratio
+from halfkelly import calculate_reward_risk_ratio
 
 rr = calculate_reward_risk_ratio(1.08500, 1.08000, 1.09500)
 print(rr)  # 2.0
@@ -227,7 +227,7 @@ def get_instrument(name: str) -> Optional[dict[str, float]]
 
 **Example:**
 ```python
-from aperion import get_instrument
+from halfkelly import get_instrument
 
 eurusd = get_instrument("EUR/USD")  # Works with slash
 usdjpy = get_instrument("usdjpy")   # Case-insensitive
@@ -248,7 +248,7 @@ def list_instruments() -> list[str]
 
 **Example:**
 ```python
-from aperion import list_instruments
+from halfkelly import list_instruments
 
 instruments = list_instruments()
 print(instruments)  # ['EURUSD', 'GBPUSD', 'USDJPY', 'GBPJPY', 'XAUUSD']

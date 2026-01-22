@@ -2,7 +2,7 @@
 Calculators module for forex risk calculations.
 """
 
-from aperion.calculators.position_sizing import (
+from halfkelly.calculators.position_sizing import (
     calculate_stop_distance_pips,
     calculate_risk_amount,
     calculate_risk_per_lot,
