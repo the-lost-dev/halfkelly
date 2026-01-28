@@ -13,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from halfkelly import print_trade_summary, size_position
 from halfkelly.calculators.position_sizing import validate_instrument
+from halfkelly.models.instrument import Instrument
 
 
 def main():
@@ -25,11 +26,11 @@ def main():
     print("Example 1: Custom AUD/USD Configuration")
     print("-" * 60)
 
-    AUDUSD = {
-        "pip_size": 0.0001,  # Fourth decimal
-        "pip_value": 10.0,  # $10 per pip (USD quote)
-        "lot_increment": 0.01,  # Micro lots
-    }
+    AUDUSD = Instrument(
+        pip_size=0.0001,  # Fourth decimal
+        pip_value=10.0,  # $10 per pip (USD quote)
+        lot_increment=0.01,  # Micro lots
+    )
 
     # Validate the instrument
     validate_instrument(AUDUSD)
@@ -53,11 +54,11 @@ def main():
 
     # For EUR/GBP, pip value depends on GBP/USD rate
     # At GBP/USD = 1.27: pip_value = 10 * 1.27 = $12.70
-    EURGBP = {
-        "pip_size": 0.0001,
-        "pip_value": 12.70,  # Variable - update based on GBP/USD
-        "lot_increment": 0.01,
-    }
+    EURGBP = Instrument(
+        pip_size=0.0001,
+        pip_value=12.70,  # Variable - update based on GBP/USD
+        lot_increment=0.01,
+    )
 
     validate_instrument(EURGBP)
     print("Instrument validated successfully!")
@@ -79,11 +80,11 @@ def main():
     print("-" * 60)
 
     # BTC/USD: 1 lot = 1 BTC, pip = $1
-    BTCUSD = {
-        "pip_size": 1.0,  # $1 movement
-        "pip_value": 1.0,  # $1 per pip per BTC
-        "lot_increment": 0.001,  # Can trade 0.001 BTC increments
-    }
+    BTCUSD = Instrument(
+        pip_size=1.0,  # $1 movement
+        pip_value=1.0,  # $1 per pip per BTC
+        lot_increment=0.001,  # Can trade 0.001 BTC increments
+    )
 
     validate_instrument(BTCUSD)
     print("Instrument validated successfully!")
@@ -98,21 +99,6 @@ def main():
         instrument_name="BTC/USD",
     )
     print_trade_summary(trade3)
-
-    # Example 4: Show validation error
-    print("-" * 60)
-    print("Example 4: Validation Error Handling")
-    print("-" * 60)
-
-    invalid_instrument = {
-        "pip_size": 0.0001,
-        # Missing pip_value and lot_increment
-    }
-
-    try:
-        validate_instrument(invalid_instrument)
-    except ValueError as e:
-        print(f"Validation failed (expected): {e}")
 
     print("\n" + "=" * 60)
     print("Custom Instrument Guidelines:")

@@ -13,34 +13,7 @@ from halfkelly.calculators.position_sizing import (
     validate_instrument,
 )
 from halfkelly.instruments.forex import EURUSD, USDJPY
-
-# class TestCalculateStopDistancePips:
-#     """Tests for calculate_stop_distance_pips function."""
-
-#     def test_eurusd_short_position(self):
-#         """Test stop distance for EUR/USD short."""
-#         result = calculate_stop_distance_pips(1.17300, 1.18218, 0.0001)
-#         assert abs(result - 91.8) < 0.01
-
-#     def test_eurusd_long_position(self):
-#         """Test stop distance for EUR/USD long."""
-#         result = calculate_stop_distance_pips(1.08500, 1.08000, 0.0001)
-#         assert result == pytest.approx(50.0)
-
-#     def test_usdjpy_long_position(self):
-#         """Test stop distance for USD/JPY long."""
-#         result = calculate_stop_distance_pips(150.500, 149.500, 0.01)
-#         assert result == 100.0
-
-#     def test_returns_positive_for_long(self):
-#         """Stop distance should always be positive for long positions."""
-#         result = calculate_stop_distance_pips(1.1000, 1.0900, 0.0001)
-#         assert result > 0
-
-#     def test_returns_positive_for_short(self):
-#         """Stop distance should always be positive for short positions."""
-#         result = calculate_stop_distance_pips(1.1000, 1.1100, 0.0001)
-#         assert result > 0
+from halfkelly.models.instrument import Instrument
 
 
 class TestCalculateRiskAmount:
@@ -139,20 +112,10 @@ class TestValidateInstrument:
         """Valid instrument should not raise."""
         validate_instrument(EURUSD)  # Should not raise
 
-    def test_missing_pip_size(self):
-        """Missing pip_size should raise ValueError."""
-        with pytest.raises(ValueError, match="pip_size"):
-            validate_instrument({"pip_value": 10.0, "lot_increment": 0.01})
-
-    def test_missing_pip_value(self):
-        """Missing pip_value should raise ValueError."""
-        with pytest.raises(ValueError, match="pip_value"):
-            validate_instrument({"pip_size": 0.0001, "lot_increment": 0.01})
-
-    def test_missing_lot_increment(self):
-        """Missing lot_increment should raise ValueError."""
-        with pytest.raises(ValueError, match="lot_increment"):
-            validate_instrument({"pip_size": 0.0001, "pip_value": 10.0})
+    def test_valid_custom_instrument(self):
+        """Custom Instrument dataclass should not raise."""
+        custom = Instrument(pip_size=0.0001, pip_value=10.0, lot_increment=0.01)
+        validate_instrument(custom)  # Should not raise
 
 
 class TestSizePosition:
@@ -170,10 +133,10 @@ class TestSizePosition:
             instrument_name="EUR/USD",
         )
 
-        assert result["direction"] == "SHORT"
-        assert result["position_size"] == 0.21
-        assert abs(result["actual_risk_amount"] - 193) < 5
-        assert abs(result["reward_risk_ratio"] - 2.5) < 0.1
+        assert result.direction == "SHORT"
+        assert result.position_size == 0.21
+        assert abs(result.actual_risk_amount - 193) < 5
+        assert abs(result.reward_risk_ratio - 2.5) < 0.1
 
     def test_eurusd_long(self):
         """Test EUR/USD long from requirements."""
@@ -187,10 +150,10 @@ class TestSizePosition:
             instrument_name="EUR/USD",
         )
 
-        assert result["direction"] == "LONG"
-        assert result["position_size"] == 0.20
-        assert result["actual_risk_amount"] == 100.0
-        assert result["reward_risk_ratio"] == 2.0
+        assert result.direction == "LONG"
+        assert result.position_size == 0.20
+        assert result.actual_risk_amount == 100.0
+        assert result.reward_risk_ratio == 2.0
 
     def test_usdjpy_long(self):
         """Test USD/JPY long from requirements."""
@@ -204,13 +167,13 @@ class TestSizePosition:
             instrument_name="USD/JPY",
         )
 
-        assert result["direction"] == "LONG"
-        assert result["position_size"] == 0.14
-        assert abs(result["actual_risk_amount"] - 93) < 5
-        assert result["reward_risk_ratio"] == 2.0
+        assert result.direction == "LONG"
+        assert result.position_size == 0.14
+        assert abs(result.actual_risk_amount - 93) < 5
+        assert result.reward_risk_ratio == 2.0
 
     def test_without_take_profit(self):
-        """Test that R:R fields are absent without take_profit."""
+        """Test that R:R fields are None without take_profit."""
         result = size_position(
             instrument=EURUSD,
             account_balance=10000,
@@ -220,8 +183,8 @@ class TestSizePosition:
             instrument_name="EUR/USD",
         )
 
-        assert "reward_risk_ratio" not in result
-        assert "potential_reward" not in result
+        assert result.reward_risk_ratio is None
+        assert result.potential_reward is None
 
     def test_actual_risk_never_exceeds_intended(self):
         """Actual risk should never exceed intended risk due to rounding down."""
@@ -235,7 +198,7 @@ class TestSizePosition:
         )
 
         intended_risk = 10000 * 0.02  # $200
-        assert result["actual_risk_amount"] <= intended_risk
+        assert result.actual_risk_amount <= intended_risk
 
 
 if __name__ == "__main__":

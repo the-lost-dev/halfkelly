@@ -25,9 +25,22 @@ from halfkelly.instruments.forex import (
     get_instrument,
     list_instruments,
 )
+from halfkelly.models import (
+    Account,
+    ExposureSummary,
+    Instrument,
+    Position,
+    TradeResult,
+)
 from halfkelly.utils.formatting import print_trade_summary
 
 __all__ = [
+    # Models
+    "Account",
+    "ExposureSummary",
+    "Instrument",
+    "Position",
+    "TradeResult",
     # Calculators
     "calculate_stop_distance_pips",
     "calculate_risk_amount",

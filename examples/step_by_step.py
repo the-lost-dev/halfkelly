@@ -47,10 +47,10 @@ def main():
     print("-" * 60)
 
     stop_pips = calculate_stop_distance_pips(
-        entry_price=entry_price, stop_loss=stop_loss, pip_size=instrument["pip_size"]
+        entry_price=entry_price, stop_loss=stop_loss, pip_size=instrument.pip_size
     )
     print("  Formula: |entry - stop| / pip_size")
-    print(f"  Calculation: |{entry_price} - {stop_loss}| / {instrument['pip_size']}")
+    print(f"  Calculation: |{entry_price} - {stop_loss}| / {instrument.pip_size}")
     print(f"  Result: {stop_pips} pips")
 
     print("\n" + "-" * 60)
@@ -66,9 +66,9 @@ def main():
     print("Step 3: Calculate Risk Per Lot")
     print("-" * 60)
 
-    risk_per_lot = calculate_risk_per_lot(stop_pips=stop_pips, pip_value=instrument["pip_value"])
+    risk_per_lot = calculate_risk_per_lot(stop_pips=stop_pips, pip_value=instrument.pip_value)
     print("  Formula: stop_pips × pip_value")
-    print(f"  Calculation: {stop_pips} × ${instrument['pip_value']}")
+    print(f"  Calculation: {stop_pips} × ${instrument.pip_value}")
     print(f"  Result: ${risk_per_lot:.2f} per lot")
 
     print("\n" + "-" * 60)
@@ -79,7 +79,7 @@ def main():
     position_size = calculate_position_size(
         risk_amount=risk_amount,
         risk_per_lot=risk_per_lot,
-        lot_increment=instrument["lot_increment"],
+        lot_increment=instrument.lot_increment,
     )
     print("  Formula: risk_amount / risk_per_lot (rounded DOWN)")
     print(f"  Calculation: ${risk_amount:.2f} / ${risk_per_lot:.2f}")

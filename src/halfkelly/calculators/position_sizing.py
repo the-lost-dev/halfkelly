@@ -11,6 +11,9 @@ Where:
     - Risk Per Lot = Stop Distance (pips) × Pip Value
 """
 
+from halfkelly.models.instrument import Instrument
+from halfkelly.models.trade import TradeResult
+
 
 def calculate_stop_distance_pips(entry_price: float, stop_loss: float, pip_size: float) -> float:
     """
@@ -122,31 +125,36 @@ def calculate_reward_risk_ratio(entry: float, stop: float, target: float) -> flo
     return reward_distance / risk_distance
 
 
-def validate_instrument(instrument: dict[str, float]) -> None:
+def validate_instrument(instrument: Instrument) -> None:
     """
-    Validate that instrument dict contains required keys.
+    Validate that instrument has all required attributes.
 
     Args:
-        instrument: Instrument configuration dictionary.
+        instrument: Instrument configuration.
 
     Raises:
-        ValueError: If required keys are missing.
+        ValueError: If required attributes are missing or invalid.
+
+    Example:
+        >>> from halfkelly.models.instrument import Instrument
+        >>> inst = Instrument(pip_size=0.0001, pip_value=10.0, lot_increment=0.01)
+        >>> validate_instrument(inst)  # No error
     """
-    required_keys = {"pip_size", "pip_value", "lot_increment"}
-    missing = required_keys - set(instrument.keys())
+    required_attrs = ["pip_size", "pip_value", "lot_increment"]
+    missing = [attr for attr in required_attrs if not hasattr(instrument, attr)]
     if missing:
-        raise ValueError(f"Instrument missing required keys: {missing}")
+        raise ValueError(f"Instrument missing required attributes: {missing}")
 
 
 def size_position(
-    instrument: dict[str, float],
+    instrument: Instrument,
     account_balance: float,
     risk_percent: float,
     entry_price: float,
     stop_loss: float,
     take_profit: float | None = None,
     instrument_name: str = "UNKNOWN",
-) -> dict:
+) -> TradeResult:
     """
     Calculate complete position sizing for a trade.
 
@@ -154,7 +162,7 @@ def size_position(
     individual calculations and returns a comprehensive trade plan.
 
     Args:
-        instrument: Instrument configuration dict with pip_size, pip_value, lot_increment.
+        instrument: Instrument configuration with pip_size, pip_value, lot_increment.
         account_balance: Total account balance in dollars.
         risk_percent: Percentage of account to risk (e.g., 2.0 for 2%).
         entry_price: Entry price for the trade.
@@ -163,7 +171,7 @@ def size_position(
         instrument_name: Name of the instrument for display purposes.
 
     Returns:
-        Dictionary containing:
+        TradeResult containing:
             - instrument_name: Name of the instrument
             - direction: "LONG" or "SHORT"
             - stop_distance_pips: Distance to stop in pips
@@ -184,44 +192,40 @@ def size_position(
         ...     take_profit=1.15000,
         ...     instrument_name="EUR/USD"
         ... )
-        >>> result["position_size"]
+        >>> result.position_size
         0.21
-        >>> result["direction"]
+        >>> result.direction
         'SHORT'
     """
     validate_instrument(instrument)
-
-    pip_size = instrument["pip_size"]
-    pip_value = instrument["pip_value"]
-    lot_increment = instrument["lot_increment"]
 
     # Determine direction based on stop loss position
     direction = "LONG" if stop_loss < entry_price else "SHORT"
 
     # Calculate position size components
-    stop_distance_pips = calculate_stop_distance_pips(entry_price, stop_loss, pip_size)
+    stop_distance_pips = calculate_stop_distance_pips(entry_price, stop_loss, instrument.pip_size)
     risk_amount = calculate_risk_amount(account_balance, risk_percent)
-    risk_per_lot = calculate_risk_per_lot(stop_distance_pips, pip_value)
-    position_size = calculate_position_size(risk_amount, risk_per_lot, lot_increment)
+    risk_per_lot = calculate_risk_per_lot(stop_distance_pips, instrument.pip_value)
+    position_size = calculate_position_size(risk_amount, risk_per_lot, instrument.lot_increment)
 
     # Calculate actual risk (may be less due to rounding down)
     actual_risk_amount = position_size * risk_per_lot
     actual_risk_percent = (actual_risk_amount / account_balance) * 100
 
-    result = {
-        "instrument_name": instrument_name,
-        "direction": direction,
-        "stop_distance_pips": round(stop_distance_pips, 1),
-        "position_size": position_size,
-        "actual_risk_amount": round(actual_risk_amount, 2),
-        "actual_risk_percent": round(actual_risk_percent, 2),
-    }
-
-    # Add reward metrics if take profit provided
+    # Calculate reward metrics if take profit provided
+    reward_risk_ratio = None
+    potential_reward = None
     if take_profit is not None:
-        rr_ratio = calculate_reward_risk_ratio(entry_price, stop_loss, take_profit)
-        potential_reward = actual_risk_amount * rr_ratio
-        result["reward_risk_ratio"] = round(rr_ratio, 2)
-        result["potential_reward"] = round(potential_reward, 2)
+        reward_risk_ratio = round(calculate_reward_risk_ratio(entry_price, stop_loss, take_profit), 2)
+        potential_reward = round(actual_risk_amount * reward_risk_ratio, 2)
 
-    return result
+    return TradeResult(
+        instrument_name=instrument_name,
+        direction=direction,
+        stop_distance_pips=round(stop_distance_pips, 1),
+        position_size=position_size,
+        actual_risk_amount=round(actual_risk_amount, 2),
+        actual_risk_percent=round(actual_risk_percent, 2),
+        reward_risk_ratio=reward_risk_ratio,
+        potential_reward=potential_reward,
+    )

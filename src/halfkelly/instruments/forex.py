@@ -14,41 +14,43 @@ Note on pip values:
     For precise calculations, pip values should be updated based on current rates.
 """
 
-# Major Pairs (USD as quote currency)
-EURUSD: dict[str, float] = {
-    "pip_size": 0.0001,
-    "pip_value": 10.0,
-    "lot_increment": 0.01,
-}
+from halfkelly.models.instrument import Instrument
 
-GBPUSD: dict[str, float] = {
-    "pip_size": 0.0001,
-    "pip_value": 10.0,
-    "lot_increment": 0.01,
-}
+# Major Pairs (USD as quote currency)
+EURUSD = Instrument(
+    pip_size=0.0001,
+    pip_value=10.0,
+    lot_increment=0.01,
+)
+
+GBPUSD = Instrument(
+    pip_size=0.0001,
+    pip_value=10.0,
+    lot_increment=0.01,
+)
 
 # JPY Pairs (different pip size due to JPY denomination)
-USDJPY: dict[str, float] = {
-    "pip_size": 0.01,
-    "pip_value": 6.67,  # Approximate, varies with USD/JPY rate
-    "lot_increment": 0.01,
-}
+USDJPY = Instrument(
+    pip_size=0.01,
+    pip_value=6.67,  # Approximate, varies with USD/JPY rate
+    lot_increment=0.01,
+)
 
-GBPJPY: dict[str, float] = {
-    "pip_size": 0.01,
-    "pip_value": 6.67,  # Approximate, varies with USD/JPY rate
-    "lot_increment": 0.01,
-}
+GBPJPY = Instrument(
+    pip_size=0.01,
+    pip_value=6.67,  # Approximate, varies with USD/JPY rate
+    lot_increment=0.01,
+)
 
 # Commodities
-XAUUSD: dict[str, float] = {
-    "pip_size": 0.01,
-    "pip_value": 1.0,  # $1 per pip per lot (100 oz)
-    "lot_increment": 0.01,
-}
+XAUUSD = Instrument(
+    pip_size=0.01,
+    pip_value=1.0,  # $1 per pip per lot (100 oz)
+    lot_increment=0.01,
+)
 
 # Registry of all instruments
-_INSTRUMENTS: dict[str, dict[str, float]] = {
+_INSTRUMENTS: dict[str, Instrument] = {
     "EURUSD": EURUSD,
     "EUR/USD": EURUSD,
     "GBPUSD": GBPUSD,
@@ -63,7 +65,7 @@ _INSTRUMENTS: dict[str, dict[str, float]] = {
 }
 
 
-def get_instrument(name: str) -> dict[str, float] | None:
+def get_instrument(name: str) -> Instrument | None:
     """
     Get instrument configuration by name.
 
@@ -72,11 +74,11 @@ def get_instrument(name: str) -> dict[str, float] | None:
               Case-insensitive.
 
     Returns:
-        Instrument configuration dict or None if not found.
+        Instrument configuration or None if not found.
 
     Example:
         >>> inst = get_instrument("EURUSD")
-        >>> inst["pip_size"]
+        >>> inst.pip_size
         0.0001
         >>> get_instrument("EUR/USD") == get_instrument("EURUSD")
         True
